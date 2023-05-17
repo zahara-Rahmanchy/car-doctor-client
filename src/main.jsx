@@ -3,9 +3,14 @@ import ReactDOM from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import Main from "./Layout/Main.jsx";
-import CheckOut from "./pages/CheckOut/CheckOut";
+import Bookings from "./pages/Bookings/Bookings";
+import BookingServices from "./pages/BookingServices/BookingServices";
+
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import AuthProvider from "./providers/AuthProvider";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +26,26 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/checkout/:id",
-        element: <CheckOut />,
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/booking/:id",
+        element: (
+          <PrivateRoute>
+            <BookingServices />
+          </PrivateRoute>
+        ),
         loader: ({params}) =>
           fetch(`http://localhost:5000/services/${params.id}`),
+      },
+      {
+        path: "/bookings",
+        element: (
+          <PrivateRoute>
+            <Bookings />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -33,7 +54,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="max-w-7xl mx-auto">
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </React.StrictMode>
   </div>
 );

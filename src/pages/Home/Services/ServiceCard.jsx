@@ -13,7 +13,7 @@ const ServiceCard = ({service}) => {
 
         <div className="card-actions flex items-center">
           <p className="text-xl text-orange-500 font-bold">Price: ${price}</p>
-          <Link to={`/checkout/${_id}`}>
+          <Link to={`/booking/${_id}`}>
             <button className="btn btn-circle btn-outline border-0 text-orange-600 font-bold">
               <AiOutlineArrowRight className="text-2xl" />
             </button>
